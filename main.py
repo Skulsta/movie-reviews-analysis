@@ -1,12 +1,12 @@
 # gensim modules
 from gensim import utils
-from gensim.models.doc2vec import LabeledSentence
 from gensim.models import Doc2Vec
+from gensim.models.doc2vec import LabeledSentence
 
 # numpy
 import numpy
 
-# classifier
+# the classifier
 from sklearn.linear_model import LogisticRegression
 
 
@@ -47,6 +47,7 @@ model.save('d2v.model')
 
 model = Doc2Vec.load('d2v.model')
 
+# Add reviews to numpy arrays and label them correctly.
 train_arrays = numpy.zeros((25000, 100))
 train_labels = numpy.zeros(25000)
 
@@ -58,9 +59,6 @@ for i in range(12500):
     train_labels[i] = 1
     train_labels[12500 + i] = 0
 
-print(train_arrays)
-
-print(train_labels)
 
 test_arrays = numpy.zeros((5000, 100))
 test_labels = numpy.zeros(5000)
@@ -76,5 +74,4 @@ for i in range(500):
 classifier = LogisticRegression()
 classifier.fit(train_arrays, train_labels)
 
-print(classifier.score(test_arrays, test_labels))
-print(classifier.score(train_arrays, train_labels))
+print("Test score: " + str(classifier.score(test_arrays, test_labels)))
