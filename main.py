@@ -48,28 +48,28 @@ model.save('d2v.model')
 model = Doc2Vec.load('d2v.model')
 
 # Add reviews to numpy arrays and label them correctly.
-train_arrays = numpy.zeros((25000, 100))
-train_labels = numpy.zeros(25000)
+train_arrays = numpy.zeros((40000, 100))
+train_labels = numpy.zeros(40000)
 
-for i in range(12500):
+for i in range(20000):
     prefix_train_pos = 'TRAIN_POS_' + str(i)
     prefix_train_neg = 'TRAIN_NEG_' + str(i)
     train_arrays[i] = model[prefix_train_pos]
-    train_arrays[12500 + i] = model[prefix_train_neg]
+    train_arrays[20000 + i] = model[prefix_train_neg]
     train_labels[i] = 1
-    train_labels[12500 + i] = 0
+    train_labels[20000 + i] = 0
 
 
-test_arrays = numpy.zeros((5000, 100))
-test_labels = numpy.zeros(5000)
+test_arrays = numpy.zeros((10000, 100))
+test_labels = numpy.zeros(10000)
 
-for i in range(500):
+for i in range(5000):
     prefix_test_pos = 'TEST_POS_' + str(i)
     prefix_test_neg = 'TEST_NEG_' + str(i)
     test_arrays[i] = model[prefix_test_pos]
-    test_arrays[500 + i] = model[prefix_test_neg]
+    test_arrays[5000 + i] = model[prefix_test_neg]
     test_labels[i] = 1
-    test_labels[500 + i] = 0
+    test_labels[5000 + i] = 0
 
 classifier = LogisticRegression()
 classifier.fit(train_arrays, train_labels)
